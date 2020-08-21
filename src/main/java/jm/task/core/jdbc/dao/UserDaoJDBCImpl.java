@@ -1,7 +1,7 @@
 package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.Util;
+import jm.task.core.jdbc.util.ConnectionUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
@@ -33,7 +33,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
     @Override
     public void createUsersTable() {
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TABLE)) {
             preparedStatement.executeUpdate();
             log.info("Table user created");
@@ -45,7 +45,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void dropUsersTable() {
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DROP_TABLE)) {
             preparedStatement.executeUpdate();
             log.info("User table dropped.");
@@ -56,7 +56,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
@@ -71,7 +71,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
@@ -84,7 +84,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> allUsers = new LinkedList<>();
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
             ResultSet resultset = preparedStatement.executeQuery();
             while (resultset.next()) {
@@ -102,7 +102,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CLEAR)) {
             preparedStatement.executeUpdate();
             log.info("All users have been removed from the table");

@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @Slf4j
-public class Util {
+public class ConnectionUtil {
 
     private static final String URL = "jdbc:mysql://localhost:3306/jm?useSSL=false&serverTimezone=GMT";
     private static final String USER = "root";
